@@ -13,11 +13,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/videos")
-public class VideoApi {
+public class VideoController {
 
     private List<Video> videoList;
 
-    public VideoApi() {
+    public VideoController() {
         this.videoList = new ArrayList<>();
         videoList.add(new Video(1L, "Wprowadzenie do mikroserwisow", ""));
         videoList.add(new Video (2L, "Docker", ""));
