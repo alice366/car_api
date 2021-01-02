@@ -31,7 +31,7 @@ public class CarController {
     public ResponseEntity<CollectionModel<Car>> getCars() {
         List<Car> allCars = carService.getAllCars();
         Link link = linkTo(CarController.class).withSelfRel();
-        allCars.forEach(car -> car.add(linkTo(CarController.class).slash(car.getId()).withSelfRel()));
+        allCars.forEach(car -> addLinkToCar(car));
         CollectionModel<Car> carCollectionModel = CollectionModel.of(allCars, link);
         return new ResponseEntity<>(carCollectionModel, HttpStatus.OK);
     }
@@ -49,7 +49,7 @@ public class CarController {
     @GetMapping("/colours")
     public ResponseEntity<CollectionModel<Car>> getCarsByColour(@RequestParam String colour) {
         List<Car> cars = carService.getCarsByColour(colour);
-        cars.forEach(car -> car.add(linkTo(CarController.class).slash(car.getId()).withSelfRel()));
+        cars.forEach(car -> addLinkToCar(car));
         cars.forEach(car -> car.add(linkTo(CarController.class).withRel("allColours")));
         CollectionModel<Car> carCollectionModel = CollectionModel.of(cars, linkTo(CarController.class).withSelfRel());
 
@@ -87,5 +87,9 @@ public class CarController {
             return new ResponseEntity<>(first.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    private Car addLinkToCar(Car car) {
+        return car.add(linkTo(CarController.class).slash(car.getId()).withSelfRel());
     }
 }
