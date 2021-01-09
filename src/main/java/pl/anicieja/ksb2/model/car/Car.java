@@ -12,7 +12,7 @@ import org.springframework.hateoas.RepresentationModel;
 @NoArgsConstructor
 public class Car extends RepresentationModel<Car> {
     private long id;
-    private String mark;
+    private String brand;
     private String model;
     private String colour;
 }

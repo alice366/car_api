@@ -1,0 +1,27 @@
+<H3>Car </H3>
+
+<div class="container">
+  <div class="alert alert-warning" *ngIf="carForm.dirty && carForm.invalid">Enter valid value</div>
+  <div class="alert alert-warning" *ngIf="carForm.dirty && brandName.invalid">Enter valid brand value</div>
+  <div class="alert alert-warning" *ngIf="carForm.dirty && modelName.invalid">Enter valid model value</div>
+  <div class="alert alert-warning" *ngIf="carForm.dirty && colourString.invalid">Enter valid colour value</div>
+  <form (ngSubmit)="!carForm.invalid && saveCar()" #carForm="ngForm">
+    <fieldset class="form-group">
+      <label>Brand</label>
+      <input type="text" #brandName="ngModel" [(ngModel)]="car.brand" class="form-control"
+             name="brand" required="required" minlength="3">
+    </fieldset>
+    <fieldset class="form-group">
+      <label>Model </label>
+      <input type="text" #modelName="ngModel" [(ngModel)]="car.model" class="form-control"
+             name="model" required="required" minlength="5">
+    </fieldset>
+    <fieldset class="form-group">
+      <label>Colour</label>
+      <input type="text" #colourString="ngModel" [(ngModel)]="car.colour" class="form-control"
+             name="colour" required="required" minlength="5">
+    </fieldset>
+
+    <button type="submit" class="btn btn-success">Save</button>
+  </form>
+</div>

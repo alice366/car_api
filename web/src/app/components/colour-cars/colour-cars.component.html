@@ -1,0 +1,26 @@
+<h4 xmlns="http://www.w3.org/1999/html">Cars by colour</h4>
+<div class="container">
+<table class="table">
+
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Brand</th>
+    <th>Model</th>
+    <th>Colour</th>
+  </tr>
+  </thead>
+
+  <tbody>
+<!--  <div *ngIf="colourCars?.length > 0">-->
+    <tr *ngFor="let car of colourCars">
+      <td>{{car.id}}</td>
+      <td>{{car.brand}}</td>
+      <td>{{car.model}}</td>
+      <td>{{car.colour}}</td>
+    </tr>
+<!--  </div>-->
+  </tbody>
+
+</table>
+</div>

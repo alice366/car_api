@@ -17,7 +17,8 @@ import java.util.Optional;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
-@RequestMapping(value = "/cars", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+@RequestMapping(value = "/cars", produces = "application/json")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CarController {
 
     CarService carService;
@@ -28,12 +29,13 @@ public class CarController {
     }
 
     @GetMapping
-    public ResponseEntity<CollectionModel<Car>> getCars() {
+    public ResponseEntity<List<Car>> getCars() {
         List<Car> allCars = carService.getAllCars();
         Link link = linkTo(CarController.class).withSelfRel();
         allCars.forEach(car -> addLinkToCar(car));
         CollectionModel<Car> carCollectionModel = CollectionModel.of(allCars, link);
-        return new ResponseEntity<>(carCollectionModel, HttpStatus.OK);
+//        return new ResponseEntity<>(carCollectionModel, HttpStatus.OK);
+        return new ResponseEntity<>(allCars, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -46,15 +48,17 @@ public class CarController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/colours")
-    public ResponseEntity<CollectionModel<Car>> getCarsByColour(@RequestParam String colour) {
+    @GetMapping("/colours/{colour}")
+//    public ResponseEntity<CollectionModel<Car>> getCarsByColour(@PathVariable String colour) {
+    public ResponseEntity<List<Car>> getCarsByColour(@PathVariable String colour) {
         List<Car> cars = carService.getCarsByColour(colour);
         cars.forEach(car -> addLinkToCar(car));
         cars.forEach(car -> car.add(linkTo(CarController.class).withRel("allColours")));
         CollectionModel<Car> carCollectionModel = CollectionModel.of(cars, linkTo(CarController.class).withSelfRel());
 
         if (!cars.isEmpty()) {
-            return new ResponseEntity<>(carCollectionModel, HttpStatus.OK);
+//            return new ResponseEntity<>(carCollectionModel, HttpStatus.OK);
+            return new ResponseEntity<>(cars, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -67,7 +71,7 @@ public class CarController {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity modifyCar(@RequestBody Car newCar) {
         Optional<Car> first = carService.getCarById(newCar.getId());
         if (first.isPresent()){
