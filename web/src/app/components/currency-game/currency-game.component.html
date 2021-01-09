@@ -1,0 +1,10 @@
+<div class="container">
+
+  <br>
+  <label>Please provide value of exchange rate EUR to PLN</label>
+  <br>
+  <input type="text" #currency>
+  <button (click)="checkValue(currency.value)" class="btn btn-success">Check</button>
+  <br>
+  {{message}}
+</div>

@@ -11,6 +11,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import {FormsModule} from '@angular/forms';
 import { ColourCarsComponent } from './components/colour-cars/colour-cars.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
+import { CurrencyGameComponent } from './components/currency-game/currency-game.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
     MenuComponent,
     FooterComponent,
     ColourCarsComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    CurrencyGameComponent,
   ],
   imports: [
     BrowserModule,
