@@ -5,7 +5,6 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.anicieja.ksb2.model.car.Car;
@@ -56,11 +55,9 @@ public class CarController {
         cars.forEach(car -> car.add(linkTo(CarController.class).withRel("allColours")));
         CollectionModel<Car> carCollectionModel = CollectionModel.of(cars, linkTo(CarController.class).withSelfRel());
 
-        if (!cars.isEmpty()) {
-//            return new ResponseEntity<>(carCollectionModel, HttpStatus.OK);
-            return new ResponseEntity<>(cars, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        return new ResponseEntity<>(carCollectionModel, HttpStatus.OK);
+        return new ResponseEntity<>(cars, HttpStatus.OK);
+
     }
 
     @PostMapping
