@@ -15,7 +15,7 @@ export class CarComponent implements OnInit {
   id: number;
   // tslint:disable-next-line:ban-types
   car: Car;
-  counter: number;
+  counter = 0;
 
   constructor(
     private carService: CarDataService,
@@ -25,7 +25,8 @@ export class CarComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
-    this.car = new Car(this.counter++, '', '', '', '');
+    this.counter = this.counter + 1;
+    this.car = new Car(this.counter, '', '', '', 0);
     // tslint:disable-next-line:triple-equals
     if (this.id != -1) {
         this.carService.getCar(this.id).subscribe(
@@ -44,6 +45,7 @@ export class CarComponent implements OnInit {
         data => {
           console.log(data);
           this.router.navigate(['cars']);
+          this.counter = this.counter + 1;
         });
     } else {
       this.carService.updateCar(this.id, this.car).subscribe(data => {

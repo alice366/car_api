@@ -12,6 +12,7 @@ import {FormsModule} from '@angular/forms';
 import { ColourCarsComponent } from './components/colour-cars/colour-cars.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { CurrencyGameComponent } from './components/currency-game/currency-game.component';
+import { YearCarsComponent } from './components/year-cars/year-cars.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { CurrencyGameComponent } from './components/currency-game/currency-game.
     ColourCarsComponent,
     WelcomeComponent,
     CurrencyGameComponent,
+    YearCarsComponent,
   ],
   imports: [
     BrowserModule,

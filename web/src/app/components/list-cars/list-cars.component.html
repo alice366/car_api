@@ -9,6 +9,7 @@
         <th>Brand</th>
         <th>Model</th>
         <th>Colour</th>
+        <th>Year</th>
         <th>Update</th>
         <th>Delete</th>
       </tr>
@@ -20,6 +21,7 @@
         <td>{{car.brand}}</td>
         <td>{{car.model}}</td>
         <td>{{car.colour}}</td>
+        <td>{{car.year}}</td>
         <td><button (click)="updateCar(car.id)" class="btn btn-success">Update</button></td>
         <td><button (click)="deleteCar(car.id)" class="btn btn-warning">Delete</button></td>
       </tr>
@@ -33,9 +35,20 @@
   <div class="row">
     <br>
   </div>
-  <div class="row">
+  <div class="container">
     <label >Choose colour of car</label>
     <input type= "text" id = "colour" (blur)="uploadColourOfCar($event)">
   </div>
+
+<div class="row">
+  <br>
+</div>
+
+<div class="container">
+  <label >Choose year of car</label>
+  <input type= "text" id="yearStart" (blur)="uploadYearStart($event)">
+  <input type= "text" id="yearEnd" (blur)="uploadYearEnd($event)">
+  <button id = "apply" (click)="uploadYearOfCars()" class="btn btn-success">Go</button>
+</div>
 
 

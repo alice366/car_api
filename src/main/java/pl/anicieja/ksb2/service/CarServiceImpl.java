@@ -44,8 +44,8 @@ public class CarServiceImpl implements CarService{
 
     private void createListOfCars() {
         this.carLists = new ArrayList<>();
-        this.carLists.add(new Car(1L, "opel", "astra", "white"));
-        this.carLists.add(new Car(2L, "skoda", "kodiaq", "white"));
-        this.carLists.add(new Car(3L, "skoda", "octavia", "black"));
+        this.carLists.add(new Car(1L, "opel", "astra", "white", 2010L));
+        this.carLists.add(new Car(2L, "skoda", "kodiaq", "white", 2018L));
+        this.carLists.add(new Car(3L, "skoda", "octavia", "black", 2016L));
     }
 }

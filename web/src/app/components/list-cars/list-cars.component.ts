@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CarDataService } from '../../service/data/car-data.service';
 import { Router } from '@angular/router';
 import {ColourCarDataService} from '../../service/data/colour-car-data.service';
+import {YearCarDataService} from '../../service/data/year-car-data.service';
 
 export class Car {
   constructor(
@@ -9,7 +10,7 @@ export class Car {
     public brand: string,
     public model: string,
     public colour: string,
-    public link: string,
+    public year: number,
   ){}
 }
 
@@ -23,10 +24,14 @@ export class ListCarsComponent implements OnInit {
   cars: Car[];
   message: string;
   colourCars: Car[];
+  yearCars: Car[];
+  yearStart: number;
+  yearEnd: number;
 
   constructor(
     private carDataService: CarDataService,
     private colourCarDataService: ColourCarDataService,
+    private yearCarDataService: YearCarDataService,
     private router: Router
   ) { }
 
@@ -72,5 +77,23 @@ export class ListCarsComponent implements OnInit {
       this.colourCars = response;
       this.router.navigate(['cars/colours', event.target.value]);
     });
+  }
+
+  uploadYearStart(event: any){
+    this.yearStart = event.target.value;
+  }
+
+  uploadYearEnd(event: any){
+    this.yearEnd = event.target.value;
+  }
+
+  uploadYearOfCars() {
+    this.yearCarDataService.getCarsByYear(this.yearStart, this.yearEnd).subscribe(
+      response => {
+        console.log(response);
+        this.yearCars = response;
+        this.router.navigate(['cars/year', this.yearStart, this.yearEnd]);
+      }
+    );
   }
 }

@@ -5,6 +5,7 @@
   <div class="alert alert-warning" *ngIf="carForm.dirty && brandName.invalid">Enter valid brand value</div>
   <div class="alert alert-warning" *ngIf="carForm.dirty && modelName.invalid">Enter valid model value</div>
   <div class="alert alert-warning" *ngIf="carForm.dirty && colourString.invalid">Enter valid colour value</div>
+  <div class="alert alert-warning" *ngIf="carForm.dirty && year.invalid">Enter valid year value</div>
   <form (ngSubmit)="!carForm.invalid && saveCar()" #carForm="ngForm">
     <fieldset class="form-group">
       <label>Brand</label>
@@ -20,6 +21,11 @@
       <label>Colour</label>
       <input type="text" #colourString="ngModel" [(ngModel)]="car.colour" class="form-control"
              name="colour" required="required" minlength="5">
+    </fieldset>
+    <fieldset class="form-group">
+      <label>Year</label>
+      <input type="text" #year="ngModel" [(ngModel)]="car.year" class="form-control"
+             name="year" required="required" minlength="4">
     </fieldset>
 
     <button type="submit" class="btn btn-success">Save</button>

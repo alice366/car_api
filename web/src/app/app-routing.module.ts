@@ -5,12 +5,14 @@ import {CarComponent} from './components/car/car.component';
 import {ColourCarsComponent} from './components/colour-cars/colour-cars.component';
 import {WelcomeComponent} from './components/welcome/welcome.component';
 import {CurrencyGameComponent} from './components/currency-game/currency-game.component';
+import {YearCarsComponent} from './components/year-cars/year-cars.component';
 
 const routes: Routes = [
   { path: 'welcome', component: WelcomeComponent},
   { path: 'cars', component: ListCarsComponent},
   { path: 'cars/:id', component: CarComponent},
   { path: 'cars/colours/:colour', component: ColourCarsComponent},
+  { path: 'cars/year/:yearStart/:yearEnd', component: YearCarsComponent},
   { path: 'currency-game-java', component: CurrencyGameComponent},
 ];
 

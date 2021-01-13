@@ -15,4 +15,5 @@ public class Car extends RepresentationModel<Car> {
     private String brand;
     private String model;
     private String colour;
+    private Long year;
 }
