@@ -1,17 +1,16 @@
 package pl.anicieja.ksb2.controller.car;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.anicieja.ksb2.dao.CarDao;
 import pl.anicieja.ksb2.model.car.Car;
-import pl.anicieja.ksb2.service.CarService;
+import pl.anicieja.ksb2.repositary.CarRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -20,18 +19,16 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CarController {
 
-    CarService carService;
-    CarDao carDao;
+    CarRepository carRepository;
 
     @Autowired
-    public CarController(CarService carService, CarDao carDao) {
-        this.carService = carService;
-        this.carDao = carDao;
+    public CarController(CarRepository carRepository) {
+        this.carRepository = carRepository;
     }
 
     @GetMapping
     public ResponseEntity<List<Car>> getCars() {
-        List<Car> allCars = carDao.findAll();
+        List<Car> allCars = carRepository.findAll();
         allCars.forEach(car -> addLinkToCar(car));
         return new ResponseEntity<>(allCars, HttpStatus.OK);
     }
@@ -40,15 +37,15 @@ public class CarController {
     public ResponseEntity<EntityModel<Car>> getCarById(@PathVariable long id) {
         Link link = linkTo(CarController.class).slash(id)
                 .withSelfRel();
-        Car carObject = carDao.getCarById(id);
-        EntityModel<Car> carEntityModel = EntityModel.of(carObject, link);
+        Optional<Car> byId = carRepository.findById(id);
+        EntityModel<Car> optionalEntityModel = EntityModel.of(byId.get(), link);
 
-        return new ResponseEntity<>(carEntityModel, HttpStatus.OK);
+        return new ResponseEntity<>(optionalEntityModel, HttpStatus.OK);
     }
 
     @GetMapping("/colours/{colour}")
     public ResponseEntity<List<Car>> getCarsByColour(@PathVariable String colour) {
-        List<Car> cars = carDao.getCarsByColour(colour);
+        List<Car> cars = carRepository.findCarsByColour(colour);
         cars.forEach(car -> addLinkToCar(car));
         cars.forEach(car -> car.add(linkTo(CarController.class).withRel("allColours")));
         return new ResponseEntity<>(cars, HttpStatus.OK);
@@ -57,7 +54,7 @@ public class CarController {
 
     @GetMapping("/year/{yearStart}/{yearEnd}")
     public ResponseEntity<List<Car>> getCarsByYearRange(@PathVariable Long yearStart, @PathVariable Long yearEnd) {
-        List<Car> cars = carDao.getCarsByYear(yearStart, yearEnd);
+        List<Car> cars = carRepository.findCarsByYearBetween(yearStart, yearEnd);
         cars.forEach(car -> addLinkToCar(car));
         cars.forEach(car -> car.add(linkTo(CarController.class).withRel("allYears")));
         return new ResponseEntity<>(cars, HttpStatus.OK);
@@ -66,25 +63,31 @@ public class CarController {
 
     @PostMapping
     public ResponseEntity addCar(@RequestBody Car car) {
-        carDao.saveCar(car.getId(), car.getBrand(), car.getModel(), car.getColour(), car.getYear());
+        carRepository.save(car);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity modifyCar(@RequestBody Car newCar) {
-        Car first = carDao.getCarById(newCar.getId());
+        Optional<Car> first = carRepository.findById(newCar.getId());
 
-        carDao.deleteCar(newCar.getId());
-        carDao.saveCar(newCar.getId(), newCar.getBrand(), newCar.getModel(), newCar.getColour(), newCar.getYear());
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (first.isPresent()) {
+            carRepository.delete(newCar);
+            carRepository.save(newCar);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity removeCar(@PathVariable long id) {
-        Car first = carDao.getCarById(id);
+        Optional<Car> first = carRepository.findById(id);
 
-        carDao.deleteCar(id);
-        return new ResponseEntity<>(first, HttpStatus.OK);
+        if (first.isPresent()) {
+            carRepository.delete(first.get());
+            return new ResponseEntity<>(first, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     private Car addLinkToCar(Car car) {
