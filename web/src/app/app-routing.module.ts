@@ -6,11 +6,15 @@ import {ColourCarsComponent} from './components/colour-cars/colour-cars.componen
 import {WelcomeComponent} from './components/welcome/welcome.component';
 import {CurrencyGameComponent} from './components/currency-game/currency-game.component';
 import {YearCarsComponent} from './components/year-cars/year-cars.component';
+import {ListNotesComponent} from './components/list-notes/list-notes.component';
+import {NoteComponent} from './components/note/note.component';
 
 const routes: Routes = [
   { path: 'welcome', component: WelcomeComponent},
   { path: 'cars', component: ListCarsComponent},
+  { path: 'notes', component: ListNotesComponent},
   { path: 'cars/:id', component: CarComponent},
+  { path: 'notes/:id', component: NoteComponent},
   { path: 'cars/colours/:colour', component: ColourCarsComponent},
   { path: 'cars/year/:yearStart/:yearEnd', component: YearCarsComponent},
   { path: 'currency-game-java', component: CurrencyGameComponent},

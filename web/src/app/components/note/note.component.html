@@ -1,0 +1,14 @@
+<H3>Note </H3>
+
+<div class="container">
+  <div class="alert alert-warning" *ngIf="noteForm.dirty && noteForm.invalid">Enter valid value</div>
+  <div class="alert alert-warning" *ngIf="noteForm.dirty && description.invalid">Enter valid description value</div>
+  <form (ngSubmit)="!noteForm.invalid && saveNote()" #noteForm="ngForm">
+    <fieldset class="form-group">
+      <label>Brand</label>
+      <input type="text" #description="ngModel" [(ngModel)]="note.description" class="form-control"
+             name="description" required="required" minlength="3">
+    </fieldset>
+    <button type="submit" class="btn btn-success">Save</button>
+  </form>
+</div>

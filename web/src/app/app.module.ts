@@ -13,6 +13,8 @@ import { ColourCarsComponent } from './components/colour-cars/colour-cars.compon
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { CurrencyGameComponent } from './components/currency-game/currency-game.component';
 import { YearCarsComponent } from './components/year-cars/year-cars.component';
+import { NoteComponent } from './components/note/note.component';
+import { ListNotesComponent } from './components/list-notes/list-notes.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { YearCarsComponent } from './components/year-cars/year-cars.component';
     WelcomeComponent,
     CurrencyGameComponent,
     YearCarsComponent,
+    NoteComponent,
+    ListNotesComponent,
   ],
   imports: [
     BrowserModule,
