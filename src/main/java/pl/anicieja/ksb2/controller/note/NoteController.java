@@ -20,6 +20,16 @@ public class NoteController {
     @Autowired
     public NoteController(NoteRepository noteRepository) {
         this.noteRepository = noteRepository;
+        createNotes();
+    }
+
+    private void createNotes() {
+        Note my_note = new Note();
+        my_note.setDescription("my first note");
+        noteRepository.save(my_note);
+        Note my_note2 = new Note();
+        my_note2.setDescription("my second note");
+        noteRepository.save(my_note2);
     }
 
     @GetMapping
